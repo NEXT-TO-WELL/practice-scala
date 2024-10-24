@@ -1,5 +1,3 @@
-import scala.io.StdIn
-
 object Spiral extends App {
   
   val n = 5
