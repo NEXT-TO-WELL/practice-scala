@@ -1,0 +1,48 @@
+import scala.io.StdIn
+
+object Spiral extends App {
+  
+  val n = 5
+  val arr = Array(Array(5, 8, 9, 3, 2), Array(8, 6, 3, 6 ,6), Array(7, 4, 1, 8, 9), Array(7,8,9,3,7), Array(9, 8, 7, 5, 3))
+  
+  val arrSpiral = new Array[Int](n * n)
+  
+  def arrIntoSpiral(xPointer: Int, yPointer: Int, direction: Int, arrSpiralPointer: Int): Unit = {
+    if (arrSpiralPointer >= n * n) {
+      printResult()
+      return
+    }
+    
+    // Store the current element in the spiral array
+    arrSpiral(arrSpiralPointer) = arr(xPointer)(yPointer)
+    arr(xPointer)(yPointer) = -1
+    
+    direction match {
+      case 0 =>
+        if (yPointer + 1 < n && arr(xPointer)(yPointer + 1) != -1)
+          arrIntoSpiral(xPointer, yPointer + 1, direction, arrSpiralPointer + 1)
+        else
+          arrIntoSpiral(xPointer + 1, yPointer, 1, arrSpiralPointer + 1)
+      case 1 =>
+        if (xPointer + 1 < n && arr(xPointer + 1)(yPointer) != -1)
+          arrIntoSpiral(xPointer + 1, yPointer, direction, arrSpiralPointer + 1)
+        else
+          arrIntoSpiral(xPointer, yPointer - 1, 2, arrSpiralPointer + 1)
+      case 2 =>
+        if (yPointer - 1 >= 0 && arr(xPointer)(yPointer - 1) != -1)
+          arrIntoSpiral(xPointer, yPointer - 1, direction, arrSpiralPointer + 1)
+        else
+          arrIntoSpiral(xPointer - 1, yPointer, 3, arrSpiralPointer + 1)
+      case 3 =>
+        if (xPointer - 1 >= 0 && arr(xPointer - 1)(yPointer) != -1)
+          arrIntoSpiral(xPointer - 1, yPointer, direction, arrSpiralPointer + 1)
+        else
+          arrIntoSpiral(xPointer, yPointer + 1, 0, arrSpiralPointer + 1)
+    }
+  }
+
+  def printResult(): Unit = {
+    println(arrSpiral.mkString(", "))
+  }
+  arrIntoSpiral(0, 0, 0, 0)
+}
