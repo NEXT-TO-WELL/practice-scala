@@ -11,7 +11,7 @@ object Spiral extends App {
       return
     }
     
-    // Store the current element in the spiral array
+    
     arrSpiral(arrSpiralPointer) = arr(xPointer)(yPointer)
     arr(xPointer)(yPointer) = -1
     
