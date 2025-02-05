@@ -1,0 +1,39 @@
+object Main {
+
+  def wordScore(word: String): Int 
+  = word.replaceAll("a", "").length()
+
+  def wordScores(wordScore: String => Int, words: List[String]): List[Int] 
+  = words.map(wordScore)
+
+  def rankedWords(wordScore: String => Int,words: List[String]): List[String] 
+  = words.sortBy(wordScore).reverse    
+
+  def bonus(word: String): Int 
+  = if(word.contains("c")) 5 else 0
+
+  def penalty(word: String): Int 
+  = if(word.contains("s")) -7 else 0
+
+  def highScoringWords(wordScore: String => Int, words: List[String]): Int => List[String] = {
+  higherThan => words.filter(word => wordScore(word) > higherThan)
+  } 
+
+  def highScore(numbers: List[Int]): Int => List[Int] = {
+    higherThan => numbers.filter(number => number > higherThan)
+  }
+
+  
+  
+  def main(args: Array[String]): Unit = {
+    val numbers = List(5, 1, 2, 4, 0)
+    val strList = List("cfg","aa","asss","aac")
+    val wordsWithScoreHigherThan: Int => List[String] = highScoringWords(w => wordScore(w) + bonus(w) + penalty(w), strList)
+    val numbersWithScoreHigherThan: Int => List[Int] = highScore(numbers)
+    println(rankedWords(w => wordScore(w) + bonus(w) + penalty(w), strList))
+    println(wordScores(wordScore, strList))
+    println(wordsWithScoreHigherThan(-100))
+    println(numbersWithScoreHigherThan(4))
+    
+  }
+}
